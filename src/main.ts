@@ -1,10 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Enable versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   // Enable validation pipes
   app.useGlobalPipes(
@@ -21,10 +26,7 @@ async function bootstrap() {
   // Setup Swagger
   const config = new DocumentBuilder()
     .setTitle('NestJS Base API')
-    .setDescription('The NestJS Base API description')
     .setVersion('1.0')
-    .addTag('users')
-    .addTag('posts')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

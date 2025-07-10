@@ -15,7 +15,10 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Post as PostEntity } from './entities/post.entity';
 
 @ApiTags('posts')
-@Controller('posts')
+@Controller({
+  path: 'posts',
+  version: '1',
+})
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
